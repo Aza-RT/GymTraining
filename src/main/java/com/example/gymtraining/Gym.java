@@ -2,6 +2,7 @@ package com.example.gymtraining;
 
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Gym {
     private String name;
@@ -10,10 +11,10 @@ public class Gym {
     private ArrayList<Member> members;
 
     Gym(String name, String address, Trainer[] trainers, Member[] members) {
-        this.name = name;
-        this.address = address;
-        this.trainers = new ArrayList<>(Arrays.stream(trainers).toList());
-        this.members = new ArrayList<>(Arrays.stream(members).toList());
+        setName(name);
+        setAddress(address);
+        setTrainers(trainers);
+        setMembers(members);
     }
 
     public String getName() {
@@ -46,18 +47,52 @@ public class Gym {
 
     public void setTrainers(Trainer[] trainers) {
         this.trainers = new ArrayList<>(Arrays.stream(trainers).toList());
+
+        ArrayList<Integer> invalidTrainersIndices = new ArrayList<>();
+        for (int i = 0; i < trainers.length; i++) {
+            Trainer trainer = trainers[i];
+
+            if (trainer.getID() == 0 || trainer.getFullName().isEmpty() || trainer.getAge() == 0) {
+                invalidTrainersIndices.add(i);
+            }
+        }
+
+        Collections.reverse(invalidTrainersIndices);
+
+        for (int idx: invalidTrainersIndices) {
+            this.trainers.remove(idx);
+        }
     }
 
     public void setMembers(Member[] members) {
         this.members = new ArrayList<>(Arrays.stream(members).toList());
+
+        ArrayList<Integer> invalidMembersIndices = new ArrayList<>();
+        for (int i = 0; i < members.length; i++) {
+            Member member = members[i];
+
+            if (member.getID() == 0 || member.getFullName().isEmpty() || member.getAge() == 0) {
+                invalidMembersIndices.add(i);
+            }
+        }
+
+        Collections.reverse(invalidMembersIndices);
+
+        for (int idx: invalidMembersIndices) {
+            this.trainers.remove(idx);
+        }
     }
 
     public void addMember(Member member) {
-        this.members.add(member);
+        if (member.getID() != 0 && !member.getFullName().isEmpty() && member.getAge() != 0) {
+            this.members.add(member);
+        }
     }
 
     public void employTrainer(Trainer trainer) {
-        this.trainers.add(trainer);
+        if (trainer.getID() != 0 && !trainer.getFullName().isEmpty() && trainer.getAge() != 0) {
+            this.trainers.add(trainer);
+        }
     }
 
     @Override

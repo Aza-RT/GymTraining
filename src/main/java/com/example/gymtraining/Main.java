@@ -1,12 +1,21 @@
 package com.example.gymtraining;
 
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
         // Gym
         System.out.println("------------GYM-------------");
-        Gym gym = new Gym("1FIT", "Baitursynuly St., 75", new Trainer[]{
+        System.out.print("\nInput a name for a gym: ");
+        String name = input.nextLine();
+
+        System.out.print("Input an address for a gym: ");
+        String address = input.nextLine();
+
+        Gym gym = new Gym(name, address, new Trainer[]{
                 new Trainer(1, "Abenov Maksat", 30, "Weight loss"),
                 new Trainer(2, "Malikov Dastan", 40, "Bodybuilding"),
                 new Trainer(3, "Aidynuly Makhanbet", 20, "Bodybuilding")
@@ -41,7 +50,21 @@ public class Main {
 
         // Trainer
         System.out.println("----------TRAINER-----------");
-        Trainer trainer = new Trainer(1, "Abenov Maksat", 30, "Weight loss");
+        System.out.print("\nTrainer ID: ");
+        int trainerID = input.nextInt();
+        input.nextLine();
+
+        System.out.print("Trainer's full name: ");
+        String trainerFullName = input.nextLine();
+
+        System.out.print("Trainer's age: ");
+        int trainerAge = input.nextInt();
+        input.nextLine();
+
+        System.out.print("Trainer's specialization: ");
+        String specialization = input.nextLine();
+
+        Trainer trainer = new Trainer(trainerID, trainerFullName, trainerAge, specialization);
         System.out.println(trainer);
         System.out.println("------------GETTERS----------\n");
 
@@ -67,7 +90,21 @@ public class Main {
 
         // Member
         System.out.println("-----------MEMBER-----------");
-        Member member = new Member(1, "Amangeldiyev Ilyas", 18, "10.10.2025");
+        System.out.print("\nMember ID: ");
+        int memberID = input.nextInt();
+        input.nextLine();
+
+        System.out.print("Member's full name: ");
+        String memberFullName = input.nextLine();
+
+        System.out.print("Member's age: ");
+        int memberAge = input.nextInt();
+        input.nextLine();
+
+        System.out.print("Member's subscription date: ");
+        String subscriptionDate = input.nextLine();
+
+        Member member = new Member(memberID, memberFullName, memberAge, subscriptionDate);
         System.out.println(member);
 
         System.out.println("------------GETTERS----------\n");
@@ -89,5 +126,7 @@ public class Main {
         System.out.println(member.getDiscount("FDA5AKD0SD"));
         System.out.println(member.subscriptionDuration());
         System.out.println(member.hasPromocode());
+
+        input.close();
     }
 }

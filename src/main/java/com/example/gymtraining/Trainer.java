@@ -1,20 +1,20 @@
 package com.example.gymtraining;
 
 public class Trainer {
-    private int ID;
+    private int trainerID;
     private String fullName;
     private int age;
     private String specialization;
 
     Trainer(int ID, String fullName, int age, String specialization) {
-        this.ID = ID;
-        this.fullName = fullName;
-        this.age = age;
+        setID(ID);
+        setFullName(fullName);
+        setAge(age);
         this.specialization = specialization;
     }
 
     public int getID() {
-        return ID;
+        return trainerID;
     }
 
     public String getFullName() {
@@ -30,15 +30,27 @@ public class Trainer {
     }
 
     public void setID(int ID) {
-        this.ID = ID;
+        if (ID > 0) {
+            this.trainerID = ID;
+        } else {
+            this.trainerID = 0;
+        }
     }
 
     public void setFullName(String fullName) {
-        this.fullName = fullName;
+        if (!fullName.trim().isEmpty()) {
+            this.fullName = fullName;
+        } else {
+            this.fullName = "";
+        }
     }
 
     public void setAge(int age) {
-        this.age = age;
+        if (age > 0) {
+            this.age = age;
+        } else {
+            this.age = 0;
+        }
     }
 
     public void setSpecialization(String specialization) {
@@ -64,6 +76,10 @@ public class Trainer {
 
     @Override
     public String toString() {
-        return String.format("\nTrainer{%d, %s, %s, %s}\n", ID, fullName, age, specialization);
+        if (trainerID > 0 && !fullName.isEmpty() && age > 0) {
+            return String.format("\nTrainer{%d, %s, %s, %s}\n", trainerID, fullName, age, specialization);
+        } else {
+            return "Invalid object.";
+        }
     }
 }
