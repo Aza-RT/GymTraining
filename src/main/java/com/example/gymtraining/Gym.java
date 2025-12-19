@@ -64,6 +64,6 @@ public class Gym {
     public String toString() {
         String trainersString = Arrays.toString(trainers.toArray(new Trainer[0]));
         String membersString = Arrays.toString(members.toArray(new Member[0]));
-        return String.format("\nThe gym center %s is located on %s.\n", name, address, trainersString, membersString);
+        return String.format("\nGym{%s, %s, %s, %s}\n", name, address, trainersString, membersString);
     }
 }

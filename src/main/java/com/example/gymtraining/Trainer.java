@@ -64,6 +64,6 @@ public class Trainer {
 
     @Override
     public String toString() {
-        return String.format("\nTrainer ID: %d\nTrainer's full name: %s\nTrainer's age: %s\nTrainer's specialization: %s\n", ID, fullName, age, specialization);
+        return String.format("\nTrainer{%d, %s, %s, %s}\n", ID, fullName, age, specialization);
     }
 }

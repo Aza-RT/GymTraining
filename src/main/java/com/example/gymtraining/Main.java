@@ -1,7 +1,7 @@
 package com.example.gymtraining;
 
 
-public class GymTrainingApplication {
+public class Main {
 
     public static void main(String[] args) {
         // Gym
@@ -27,11 +27,9 @@ public class GymTrainingApplication {
         System.out.println("----------SETTERS----------");
 
         gym.setName("Champion Fitness");
-        System.out.println(gym);
-        System.out.println("-----------------------------");
-
         gym.setAddress("Al-Farabi St., 10");
         System.out.println(gym);
+        System.out.println("-----------------------------");
 
         System.out.println("-----------METHODS----------");
 
@@ -55,17 +53,8 @@ public class GymTrainingApplication {
         System.out.println("------------SETTERS----------");
 
         trainer.setID(10);
-        System.out.println(trainer);
-        System.out.println("-----------------------------");
-
         trainer.setFullName("Malikov Dastan");
-        System.out.println(trainer);
-        System.out.println("-----------------------------");
-
         trainer.setAge(40);
-        System.out.println(trainer);
-        System.out.println("-----------------------------");
-
         trainer.setSpecialization("Bodybuilding");
         System.out.println(trainer);
 
@@ -88,19 +77,10 @@ public class GymTrainingApplication {
         System.out.println("subscriptionDate = " + member.getSubscriptionDate());
         System.out.println();
 
-        System.out.println("------------SETTERS----------\n");
+        System.out.println("------------SETTERS----------");
         member.setID(10);
-        System.out.println(member);
-        System.out.println("-----------------------------");
-
         member.setFullName("Dautov Fariddin");
-        System.out.println(member);
-        System.out.println("-----------------------------");
-
         member.setAge(17);
-        System.out.println(member);
-        System.out.println("-----------------------------");
-
         member.setSubscriptionDate("10.12.2025");
         System.out.println(member);
 

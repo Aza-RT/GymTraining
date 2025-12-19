@@ -100,6 +100,6 @@ public class Member {
 
     @Override
     public String toString() {
-        return String.format("\nMember ID: %d\nMember's full name: %s\nMember's age: %s\nWhen did the member buy the subscription: %s\n", ID, fullName, age, subscriptionDate.format(dateFormat));
+        return String.format("\nMember{%d, %s, %s, %s}\n", ID, fullName, age, subscriptionDate.format(dateFormat));
     }
 }
