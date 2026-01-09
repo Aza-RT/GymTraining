@@ -3,7 +3,7 @@ package com.example.gymtraining;
 import java.util.ArrayList;
 
 public class GroupTrainer extends Trainer {
-    private ArrayList<Member> clients;
+    private ArrayList<Member> clients = new ArrayList<>();
 
     GroupTrainer(int id, String name, int age, String specialization, Member[] clients) {
         super(id, name, age, specialization);
