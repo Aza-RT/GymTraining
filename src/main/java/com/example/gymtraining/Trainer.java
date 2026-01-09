@@ -1,13 +1,16 @@
 package com.example.gymtraining;
 
-public class Trainer {
-    private int trainerID;
-    private String fullName;
-    private int age;
-    private String specialization;
+import java.util.Random;
 
-    Trainer(int ID, String fullName, int age, String specialization) {
-        setID(ID);
+public class Trainer {
+    protected int trainerID;
+    protected String fullName;
+    protected int age;
+    protected String specialization;
+    private final Random random = new Random();
+
+    Trainer(int trainerID, String fullName, int age, String specialization) {
+        setID(trainerID);
         setFullName(fullName);
         setAge(age);
         this.specialization = specialization;
@@ -29,9 +32,9 @@ public class Trainer {
         return specialization;
     }
 
-    public void setID(int ID) {
-        if (ID > 0) {
-            this.trainerID = ID;
+    public void setID(int trainerID) {
+        if (trainerID > 0) {
+            this.trainerID = trainerID;
         } else {
             this.trainerID = 0;
         }
@@ -58,20 +61,28 @@ public class Trainer {
     }
 
     public String scheduleOnDay(String day) {
+        String[] hours = {"08", "09", "10", "11", "12", "13", "14", "15",
+                          "16", "17", "18", "19", "20", "21"};
+        String[] minutes = {"00", "15", "30", "45"};
+
         switch (day) {
-            case "Monday" -> {return String.format("%s is free on 13:00 and 16:00 on %s.", fullName, day);}
-            case "Tuesday" -> {return String.format("%s is free on 11:30 and 15:00 on %s.", fullName, day);}
-            case "Wednesday" -> {return String.format("%s is free on 12:00 and 17:30 on %s.", fullName, day);}
-            case "Thursday" -> {return String.format("%s is free on 12:30 and 17:00 on %s.", fullName, day);}
-            case "Friday" -> {return String.format("%s is free on 9:30 and 15:00 on %s.", fullName, day);}
-            case "Saturday" -> {return String.format("%s is free on 10:00 and 18:30 on %s.", fullName, day);}
-            case "Sunday" -> {return String.format("%s is free on 11:00 and 19:00 on %s.", fullName, day);}
+            case "Monday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 24)], minutes[random.nextInt(0,4)], day);}
+            case "Tuesday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 24)], minutes[random.nextInt(0,4)], day);}
+            case "Wednesday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 24)], minutes[random.nextInt(0,4)], day);}
+            case "Thursday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 24)], minutes[random.nextInt(0,4)], day);}
+            case "Friday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 24)], minutes[random.nextInt(0,4)], day);}
+            case "Saturday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 24)], minutes[random.nextInt(0,4)], day);}
+            case "Sunday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 24)], minutes[random.nextInt(0,4)], day);}
             default -> {return "Invalid day.";}
         }
     }
 
     public boolean isProfessional(String field) {
         return field.equalsIgnoreCase(specialization);
+    }
+
+    public boolean isValid() {
+        return trainerID != 0 && !fullName.isEmpty() && age > 0;
     }
 
     @Override

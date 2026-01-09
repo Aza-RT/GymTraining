@@ -5,19 +5,19 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class Member {
-    private int memberID;
-    private String fullName;
-    private int age;
-    private LocalDate subscriptionDate;
-    private int pricePerYear = 15_000;
-    private int promocodePercent = 0;
-    private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    protected int memberID;
+    protected String fullName;
+    protected int age;
+    protected LocalDate subscriptionDate;
+    protected int pricePerYear = 15_000;
+    protected int promocodePercent = 0;
+    protected final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     Member(int ID, String fullName, int age, String subscriptionDate) {
         setID(ID);
-        this.fullName = fullName;
-        this.age = age;
-        this.subscriptionDate = LocalDate.parse(subscriptionDate, dateFormat);
+        setFullName(fullName);
+        setAge(age);
+        setSubscriptionDate(subscriptionDate);
     }
 
     public int getID() {
@@ -36,9 +36,9 @@ public class Member {
         return subscriptionDate.format(dateFormat);
     }
 
-    public void setID(int ID) {
-        if (ID > 0) {
-            this.memberID = ID;
+    public void setID(int memberID) {
+        if (memberID > 0) {
+            this.memberID = memberID;
         }
         else {
             this.memberID = 0;
@@ -109,6 +109,10 @@ public class Member {
         } else {
             return String.format("%s does not have a discount promocode.", fullName);
         }
+    }
+
+    public boolean isValid() {
+        return memberID != 0 && !fullName.isEmpty() && age > 0;
     }
 
     @Override

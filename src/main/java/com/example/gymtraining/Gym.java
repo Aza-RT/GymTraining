@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Gym {
-    private String name;
-    private String address;
-    private ArrayList<Trainer> trainers;
-    private ArrayList<Member> members;
+    protected String name;
+    protected String address;
+    protected ArrayList<Trainer> trainers;
+    protected ArrayList<Member> members;
 
     Gym(String name, String address, Trainer[] trainers, Member[] members) {
         setName(name);
@@ -38,11 +38,19 @@ public class Gym {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (!name.trim().isEmpty()) {
+            this.name = name;
+        } else {
+            this.name = "";
+        }
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        if (!address.trim().isEmpty()) {
+            this.address = address;
+        } else {
+            this.name = "";
+        }
     }
 
     public void setTrainers(Trainer[] trainers) {
@@ -84,21 +92,25 @@ public class Gym {
     }
 
     public void addMember(Member member) {
-        if (member.getID() != 0 && !member.getFullName().isEmpty() && member.getAge() != 0) {
+        if (member.isValid()) {
             this.members.add(member);
         }
     }
 
     public void employTrainer(Trainer trainer) {
-        if (trainer.getID() != 0 && !trainer.getFullName().isEmpty() && trainer.getAge() != 0) {
+        if (trainer.isValid()) {
             this.trainers.add(trainer);
         }
     }
 
     @Override
     public String toString() {
-        String trainersString = Arrays.toString(trainers.toArray(new Trainer[0]));
-        String membersString = Arrays.toString(members.toArray(new Member[0]));
-        return String.format("\nGym{%s, %s, %s, %s}\n", name, address, trainersString, membersString);
+        if (!name.trim().isEmpty() && !address.trim().isEmpty()) {
+            String trainersString = Arrays.toString(trainers.toArray(new Trainer[0]));
+            String membersString = Arrays.toString(members.toArray(new Member[0]));
+            return String.format("\nGym{%s, %s, %s, %s}\n", name, address, trainersString, membersString);
+        } else {
+            return "Invalid object.";
+        }
     }
 }

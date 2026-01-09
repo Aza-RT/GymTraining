@@ -1,132 +1,209 @@
 package com.example.gymtraining;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
+    private static final Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+        ArrayList<Member> members = new ArrayList<>();
+        ArrayList<Trainer> trainers = new ArrayList<>();
 
-        // Gym
-        System.out.println("------------GYM-------------");
-        System.out.print("\nInput a name for a gym: ");
-        String name = input.nextLine();
+        members.add(new ChildMember(1, "Aruzhan Sadykqyzy", 14, "01.01.2025", "Sadyk A."));
+        members.add(new PremiumMember(2, "Dias Nur", 25, "05.01.2025", trainers.toArray(new Trainer[0]), 3));
 
-        System.out.print("Input an address for a gym: ");
-        String address = input.nextLine();
+        trainers.add(new PersonalTrainer(1, "Almas Toleu", 30, "Fitness", new ChildMember(1, "Aruzhan Sadykqyzy", 14, "01.01.2025", "Sadyk A.")));
+        trainers.add(new GroupTrainer(2, "Nursultan Bek", 28, "Yoga", members.toArray(new Member[0])));
 
-        Gym gym = new Gym(name, address, new Trainer[]{
-                new Trainer(1, "Abenov Maksat", 30, "Weight loss"),
-                new Trainer(2, "Malikov Dastan", 40, "Bodybuilding"),
-                new Trainer(3, "Aidynuly Makhanbet", 20, "Bodybuilding")
-        }, new Member[]{
-                new Member(1, "Amangeldiyev Ilyas", 18, "10.12.2025"),
-                new Member(2, "Dautov Fariddin", 17, "07.12.2025"),
-                new Member(3, "Yeskendirov Aidyn", 18, "12.12.2025")
-        });
-        System.out.println(gym);
+        int choice;
 
-        System.out.println("----------GETTERS-----------\n");
+        do {
+            printMenu();
+            choice = readInt("Choose option: ");
 
-        System.out.println("Name: " + gym.getName());
-        System.out.println("Address: " + gym.getAddress());
-        System.out.println(gym.getTrainers());
-        System.out.println(gym.getMembers());
+            switch (choice) {
+                case 1 -> viewMembers(members);
+                case 2 -> viewTrainers(trainers);
+                case 3 -> addMember(members);
+                case 4 -> addTrainer(trainers);
+                case 0 -> System.exit(0);
+                default -> System.out.println("Invalid option. Try again.");
+            }
 
-        System.out.println("----------SETTERS----------");
+        } while (true);
+    }
 
-        gym.setName("Champion Fitness");
-        gym.setAddress("Al-Farabi St., 10");
-        System.out.println(gym);
-        System.out.println("-----------------------------");
+    private static void printMenu() {
+        System.out.println("""
+                =================================
+                     GYM MANAGEMENT SYSTEM
+                =================================
+                1. View all members
+                2. View all trainers
+                3. Add new member
+                4. Add new trainer
+                0. Exit
+                =================================
+                """);
+    }
 
-        System.out.println("-----------METHODS----------");
+    private static void viewMembers(ArrayList<Member> members) {
+        if (!members.isEmpty()) {
+            System.out.println("\n--------- MEMBERS LIST ---------");
 
-        gym.addMember(new Member(4, "Yerzhanov Shakriyar", 18, "05.12.2025"));
-        System.out.println(gym.getMembers());
+            for (Member m : members) {
+                System.out.println(m);
+                System.out.println("Subscription: " + m.subscriptionDuration());
 
-        gym.employTrainer(new Trainer(4, "Aben Aibar", 25, "Weight loss"));
-        System.out.println(gym.getTrainers());
+                if (m instanceof PremiumMember) {
+                    PremiumMember pm = (PremiumMember) m;
+                    System.out.println("VIP Subscription Duration: " + pm.subscriptionDuration());
+                }
+                if (m instanceof ChildMember) {
+                    ChildMember cm = (ChildMember) m;
+                    System.out.println("Parent: " + cm.getParentName());
+                }
+                System.out.println("--------------------------------");
+            }
+        }
+    }
 
-        // Trainer
-        System.out.println("----------TRAINER-----------");
-        System.out.print("\nTrainer ID: ");
-        int trainerID = input.nextInt();
+    private static void viewTrainers(ArrayList<Trainer> trainers) {
+        if (!trainers.isEmpty()) {
+            System.out.println("\n--------- TRAINERS LIST ---------");
+
+            for (Trainer t : trainers) {
+                System.out.println(t);
+                System.out.println(t.scheduleOnDay("Monday"));
+
+                if (t instanceof PersonalTrainer) {
+                    PersonalTrainer pt = (PersonalTrainer) t;
+                    System.out.println("Session duration: " + pt.durationOfSession());
+                }
+                if (t instanceof GroupTrainer) {
+                    GroupTrainer gt = (GroupTrainer) t;
+                    System.out.println(String.format("%s available spots.", gt.hasAvailableSpots() ? "Has" : "Doesn't have"));
+                }
+                System.out.println("--------------------------------");
+            }
+        }
+    }
+
+    private static void addMember(ArrayList<Member> members) {
+        System.out.println("\nAdd Member:");
+        System.out.println("1. Child Member");
+        System.out.println("2. Premium Member");
+
+        int type = readInt("Choose type: ");
+
+        try {
+            if (type == 1) {
+                members.add(new ChildMember(
+                        readInt("ID: "),
+                        readString("Full name: "),
+                        readInt("Age: "),
+                        readString("Join date: "),
+                        readString("Parent name: ")
+                ));
+            } else if (type == 2) {
+                members.add(new PremiumMember(
+                        readInt("ID: "),
+                        readString("Full name: "),
+                        readInt("Age: "),
+                        readString("Join date: "),
+                        new Trainer[]{readTrainer("Trainer 1: "), readTrainer("Trainer 2: ")},
+                        readInt("VIP level (1-5): ")
+                ));
+            } else {
+                System.out.println("Invalid member type.");
+                return;
+            }
+            System.out.println("Member added successfully.");
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    private static void addTrainer(ArrayList<Trainer> trainers) {
+        System.out.println("\nAdd Trainer:");
+        System.out.println("1. Personal Trainer");
+        System.out.println("2. Group Trainer");
+
+        int type = readInt("Choose type: ");
+
+        try {
+            if (type == 1) {
+                trainers.add(new PersonalTrainer(
+                        readInt("ID: "),
+                        readString("Full name: "),
+                        readInt("Age: "),
+                        readString("Specialization: "),
+                        readMember("Member: ")
+                ));
+            } else if (type == 2) {
+                trainers.add(new GroupTrainer(
+                        readInt("ID: "),
+                        readString("Full name: "),
+                        readInt("Age: "),
+                        readString("Specialization: "),
+                        new Member[]{readMember("Member 1: "), readMember("Member 2: ")}
+                ));
+            } else {
+                System.out.println("Invalid trainer type.");
+                return;
+            }
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    private static int readInt(String message) {
+        System.out.print(message);
+        while (!input.hasNextInt()) {
+            System.out.print("Enter a valid number: ");
+            input.next();
+        }
+        int value = input.nextInt();
         input.nextLine();
+        return value;
+    }
 
-        System.out.print("Trainer's full name: ");
-        String trainerFullName = input.nextLine();
+    private static String readString(String message) {
+        System.out.print(message);
+        return input.nextLine();
+    }
 
-        System.out.print("Trainer's age: ");
-        int trainerAge = input.nextInt();
+    private static Member readMember(String message) {
+        System.out.println(message);
+        System.out.print("    ID: ");
+        int ID = input.nextInt();
         input.nextLine();
-
-        System.out.print("Trainer's specialization: ");
-        String specialization = input.nextLine();
-
-        Trainer trainer = new Trainer(trainerID, trainerFullName, trainerAge, specialization);
-        System.out.println(trainer);
-        System.out.println("------------GETTERS----------\n");
-
-        System.out.println("ID = " + trainer.getID());
-        System.out.println("fullName = " + trainer.getFullName());
-        System.out.println("age = " + trainer.getAge());
-        System.out.println("specialization = " + trainer.getSpecialization());
-        System.out.println();
-        System.out.println("------------SETTERS----------");
-
-        trainer.setID(10);
-        trainer.setFullName("Malikov Dastan");
-        trainer.setAge(40);
-        trainer.setSpecialization("Bodybuilding");
-        System.out.println(trainer);
-
-        System.out.println("-----------METHODS----------");
-        System.out.println();
-        System.out.println(trainer.isProfessional("Weight loss"));
-        System.out.println(trainer.scheduleOnDay("Monday"));
-        System.out.println(trainer.scheduleOnDay("March 14th"));
-        System.out.println();
-
-        // Member
-        System.out.println("-----------MEMBER-----------");
-        System.out.print("\nMember ID: ");
-        int memberID = input.nextInt();
+        System.out.print("    Full name: ");
+        String fullName = input.nextLine();
         input.nextLine();
-
-        System.out.print("Member's full name: ");
-        String memberFullName = input.nextLine();
-
-        System.out.print("Member's age: ");
-        int memberAge = input.nextInt();
+        System.out.print("    Age: ");
+        int age = input.nextInt();
         input.nextLine();
-
-        System.out.print("Member's subscription date: ");
+        System.out.print("    Subscription date: ");
         String subscriptionDate = input.nextLine();
 
-        Member member = new Member(memberID, memberFullName, memberAge, subscriptionDate);
-        System.out.println(member);
+        return new Member(ID, fullName, age, subscriptionDate);
+    }
 
-        System.out.println("------------GETTERS----------\n");
-        System.out.println("ID = " + member.getID());
-        System.out.println("fullName = " + member.getFullName());
-        System.out.println("age = " + member.getAge());
-        System.out.println("subscriptionDate = " + member.getSubscriptionDate());
-        System.out.println();
+    private static Trainer readTrainer(String message) {
+        System.out.println(message);
+        System.out.print("    ID: ");
+        int ID = input.nextInt();
+        input.nextLine();
+        System.out.print("    Full name: ");
+        String fullName = input.nextLine();
+        input.nextLine();
+        System.out.print("    Age: ");
+        int age = input.nextInt();
+        input.nextLine();
+        System.out.print("    Specialization: ");
+        String specialization = input.nextLine();
 
-        System.out.println("------------SETTERS----------");
-        member.setID(10);
-        member.setFullName("Dautov Fariddin");
-        member.setAge(17);
-        member.setSubscriptionDate("10.12.2025");
-        System.out.println(member);
-
-        System.out.println("------------METHODS----------\n");
-        System.out.println(member.getDiscount("Q4TN9CAYP6"));
-        System.out.println(member.getDiscount("FDA5AKD0SD"));
-        System.out.println(member.subscriptionDuration());
-        System.out.println(member.hasPromocode());
-
-        input.close();
+        return new Trainer(ID, fullName, age, specialization);
     }
 }
