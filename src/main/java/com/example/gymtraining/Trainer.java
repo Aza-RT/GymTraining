@@ -66,13 +66,13 @@ public class Trainer {
         String[] minutes = {"00", "15", "30", "45"};
 
         switch (day) {
-            case "Monday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 24)], minutes[random.nextInt(0,4)], day);}
-            case "Tuesday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 24)], minutes[random.nextInt(0,4)], day);}
-            case "Wednesday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 24)], minutes[random.nextInt(0,4)], day);}
-            case "Thursday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 24)], minutes[random.nextInt(0,4)], day);}
-            case "Friday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 24)], minutes[random.nextInt(0,4)], day);}
-            case "Saturday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 24)], minutes[random.nextInt(0,4)], day);}
-            case "Sunday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 24)], minutes[random.nextInt(0,4)], day);}
+            case "Monday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 14)], minutes[random.nextInt(0,4)], day);}
+            case "Tuesday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 14)], minutes[random.nextInt(0,4)], day);}
+            case "Wednesday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 14)], minutes[random.nextInt(0,4)], day);}
+            case "Thursday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 14)], minutes[random.nextInt(0,4)], day);}
+            case "Friday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 14)], minutes[random.nextInt(0,4)], day);}
+            case "Saturday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 14)], minutes[random.nextInt(0,4)], day);}
+            case "Sunday" -> {return String.format("%s is free at %s:%s on %s.", fullName, hours[random.nextInt(0, 14)], minutes[random.nextInt(0,4)], day);}
             default -> {return "Invalid day.";}
         }
     }
