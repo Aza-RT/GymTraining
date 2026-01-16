@@ -1,4 +1,6 @@
-package com.example.gymtraining;
+package com.example.gymtraining.Model;
+
+import com.example.gymtraining.Exception.InvalidInputException;
 
 public class PersonalTrainer extends Trainer {
     private Member client;
@@ -22,7 +24,7 @@ public class PersonalTrainer extends Trainer {
             this.client = client;
         }
         else {
-            this.client = new Member(0, "", 0, "01.01.1000");
+            throw new InvalidInputException("Invalid client inputted.");
         }
     }
 

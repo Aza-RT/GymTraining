@@ -1,4 +1,6 @@
-package com.example.gymtraining;
+package com.example.gymtraining.Model;
+
+import com.example.gymtraining.Exception.InvalidInputException;
 
 public class ChildMember extends Member {
     private String parentName;
@@ -17,7 +19,7 @@ public class ChildMember extends Member {
             this.parentName = parentName;
         }
         else {
-            this.parentName = "";
+            throw new InvalidInputException("Invalid parent's name inputted.");
         }
     }
 

@@ -1,4 +1,6 @@
-package com.example.gymtraining;
+package com.example.gymtraining.Model;
+
+import com.example.gymtraining.Exception.InvalidInputException;
 
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ public class Gym {
     protected ArrayList<Trainer> trainers;
     protected ArrayList<Member> members;
 
-    Gym(String name, String address, Trainer[] trainers, Member[] members) {
+    public Gym(String name, String address, Trainer[] trainers, Member[] members) {
         setName(name);
         setAddress(address);
         setTrainers(trainers);
@@ -41,7 +43,7 @@ public class Gym {
         if (!name.trim().isEmpty()) {
             this.name = name;
         } else {
-            this.name = "";
+            throw new InvalidInputException("Invalid name inputted.");
         }
     }
 
@@ -49,7 +51,7 @@ public class Gym {
         if (!address.trim().isEmpty()) {
             this.address = address;
         } else {
-            this.name = "";
+            throw new InvalidInputException("Invalid address inputted.");
         }
     }
 

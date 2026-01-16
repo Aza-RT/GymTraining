@@ -1,4 +1,6 @@
-package com.example.gymtraining;
+package com.example.gymtraining.Model;
+
+import com.example.gymtraining.Exception.InvalidInputException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,7 +15,7 @@ public class Member {
     protected int promocodePercent = 0;
     protected final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-    Member(int ID, String fullName, int age, String subscriptionDate) {
+    public Member(int ID, String fullName, int age, String subscriptionDate) {
         setID(ID);
         setFullName(fullName);
         setAge(age);
@@ -41,7 +43,7 @@ public class Member {
             this.memberID = memberID;
         }
         else {
-            this.memberID = 0;
+            throw new InvalidInputException("Invalid ID inputted.");
         }
     }
 
@@ -49,7 +51,7 @@ public class Member {
         if (!fullName.trim().isEmpty()) {
             this.fullName = fullName;
         } else {
-            this.fullName = "";
+            throw new InvalidInputException("Invalid name inputted.");
         }
     }
 
@@ -57,7 +59,7 @@ public class Member {
         if (age > 0) {
             this.age = age;
         } else {
-            this.age = 0;
+            throw new InvalidInputException("Invalid age inputted.");
         }
     }
 

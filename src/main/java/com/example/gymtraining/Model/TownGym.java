@@ -1,4 +1,6 @@
-package com.example.gymtraining;
+package com.example.gymtraining.Model;
+
+import com.example.gymtraining.Exception.InvalidInputException;
 
 public class TownGym extends Gym {
 
@@ -19,7 +21,7 @@ public class TownGym extends Gym {
         if (capacity > 0) {
             this.capacity = capacity;
         } else {
-            this.capacity = 0;
+            throw new InvalidInputException("Invalid capacity inputted.");
         }
     }
 

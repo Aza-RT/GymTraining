@@ -1,8 +1,9 @@
-package com.example.gymtraining;
+package com.example.gymtraining.Model;
+
+import com.example.gymtraining.Exception.InvalidInputException;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class PremiumMember extends Member {
@@ -24,7 +25,7 @@ public class PremiumMember extends Member {
             this.vipLevel = vipLevel;
         }
         else {
-            this.vipLevel = 0;
+            throw new InvalidInputException("Invalid level inputted.");
         }
     }
 

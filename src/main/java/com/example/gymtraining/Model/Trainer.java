@@ -1,4 +1,6 @@
-package com.example.gymtraining;
+package com.example.gymtraining.Model;
+
+import com.example.gymtraining.Exception.InvalidInputException;
 
 import java.util.Random;
 
@@ -9,7 +11,7 @@ public class Trainer {
     protected String specialization;
     private final Random random = new Random();
 
-    Trainer(int trainerID, String fullName, int age, String specialization) {
+    public Trainer(int trainerID, String fullName, int age, String specialization) {
         setID(trainerID);
         setFullName(fullName);
         setAge(age);
@@ -36,7 +38,7 @@ public class Trainer {
         if (trainerID > 0) {
             this.trainerID = trainerID;
         } else {
-            this.trainerID = 0;
+            throw new InvalidInputException("Invalid ID inputted.");
         }
     }
 
@@ -44,7 +46,7 @@ public class Trainer {
         if (!fullName.trim().isEmpty()) {
             this.fullName = fullName;
         } else {
-            this.fullName = "";
+            throw new InvalidInputException("Invalid name inputted.");
         }
     }
 
@@ -52,7 +54,7 @@ public class Trainer {
         if (age > 0) {
             this.age = age;
         } else {
-            this.age = 0;
+            throw new InvalidInputException("Invalid age inputted.");
         }
     }
 

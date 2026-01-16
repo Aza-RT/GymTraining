@@ -1,4 +1,6 @@
-package com.example.gymtraining;
+package com.example.gymtraining.Model;
+
+import com.example.gymtraining.Exception.InvalidInputException;
 
 public class CityGym extends Gym {
 
@@ -19,7 +21,7 @@ public class CityGym extends Gym {
         if (branches > 0) {
             this.branches = branches;
         } else {
-            this.branches = 0;
+            throw new InvalidInputException("Invalid branch inputted.");
         }
     }
 
