@@ -12,11 +12,11 @@ public class GymMenu implements Menu {
         ArrayList<Member> members = new ArrayList<>();
         ArrayList<Trainer> trainers = new ArrayList<>();
 
-        members.add(new ChildMember(1, "Aruzhan Sadykqyzy", 14, "01.01.2025", "Sadyk A."));
-        members.add(new PremiumMember(2, "Dias Nur", 25, "05.01.2025", trainers.toArray(new Trainer[0]), 3));
+        members.add(new ChildMember(1, "Aruzhan Sadykqyzy", 14, "01.01.2026", "Sadyk A."));
+        members.add(new PremiumMember(2, "Dias Nur", 25, "05.01.2026", new Trainer[]{new Trainer(1, "Almas Toleu", 30, "Fitness")}, 3));
 
-        trainers.add(new PersonalTrainer(1, "Almas Toleu", 30, "Fitness", new ChildMember(1, "Aruzhan Sadykqyzy", 14, "01.01.2025", "Sadyk A.")));
-        trainers.add(new GroupTrainer(2, "Nursultan Bek", 28, "Yoga", members.toArray(new Member[0])));
+        trainers.add(new PersonalTrainer(1, "Almas Toleu", 30, "Fitness", new ChildMember(1, "Aruzhan Sadykqyzy", 14, "01.01.2026", "Sadyk A.")));
+        trainers.add(new GroupTrainer(2, "Nursultan Bek", 28, "Yoga", new Member[]{new Member(3, "Ilyas Amangeldiyev", 17, "12.01.2026")}));
 
         int choice;
 

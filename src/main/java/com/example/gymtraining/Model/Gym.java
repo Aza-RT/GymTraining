@@ -9,8 +9,8 @@ import java.util.Collections;
 public class Gym {
     protected String name;
     protected String address;
-    protected ArrayList<Trainer> trainers;
-    protected ArrayList<Member> members;
+    protected ArrayList<Trainer> trainers = new ArrayList<>();
+    protected ArrayList<Member> members = new ArrayList<>();
 
     public Gym(String name, String address, Trainer[] trainers, Member[] members) {
         setName(name);
@@ -75,21 +75,10 @@ public class Gym {
     }
 
     public void setMembers(Member[] members) {
-        this.members = new ArrayList<>(Arrays.stream(members).toList());
-
-        ArrayList<Integer> invalidMembersIndices = new ArrayList<>();
         for (int i = 0; i < members.length; i++) {
-            Member member = members[i];
-
-            if (member.getID() == 0 || member.getFullName().isEmpty() || member.getAge() == 0) {
-                invalidMembersIndices.add(i);
+            if (members[i].isValid()) {
+                this.members.add(members[i]);
             }
-        }
-
-        Collections.reverse(invalidMembersIndices);
-
-        for (int idx: invalidMembersIndices) {
-            this.trainers.remove(idx);
         }
     }
 

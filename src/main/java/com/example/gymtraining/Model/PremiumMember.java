@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class PremiumMember extends Member {
-    private ArrayList<Trainer> availableTrainers;
+    private ArrayList<Trainer> availableTrainers = new ArrayList<>();
     private int vipLevel;
 
     public PremiumMember(int id, String fullName, int age, String joinDate, Trainer[] availableTrainers, int vipLevel) {
@@ -53,7 +53,12 @@ public class PremiumMember extends Member {
     @Override
     public String toString() {
         if (memberID > 0 && !fullName.isEmpty() && age > 0) {
-            return String.format("\nPremiumMember{%d, %s, %s, %s, %d, %s}\n", memberID, fullName, age, subscriptionDate.format(dateFormat), vipLevel, Arrays.toString(availableTrainers.toArray(new String[0])));
+            ArrayList<String> trainersString = new ArrayList<>();
+            for(Trainer trainer: availableTrainers) {
+                trainersString.add(trainer.toString());
+            }
+
+            return String.format("\nPremiumMember{%d, %s, %s, %s, %d, %s}\n", memberID, fullName, age, subscriptionDate.format(dateFormat), vipLevel, Arrays.toString(trainersString.toArray(new String[0])));
         } else {
             return "Invalid object.";
         }
