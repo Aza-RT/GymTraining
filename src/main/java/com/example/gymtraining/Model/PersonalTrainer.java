@@ -38,4 +38,13 @@ public class PersonalTrainer extends Trainer {
             default -> {return 40;}
         }
     }
+
+    @Override
+    public String toString() {
+        if (trainerID > 0 && !fullName.isEmpty() && age > 0) {
+            return String.format("\nPersonalTrainer{%d, %s, %s, %s, %s}\n", trainerID, fullName, age, specialization, client.toString());
+        } else {
+            return "Invalid object.";
+        }
+    }
 }

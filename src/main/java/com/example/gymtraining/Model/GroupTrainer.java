@@ -1,6 +1,7 @@
 package com.example.gymtraining.Model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GroupTrainer extends Trainer {
     private ArrayList<Member> clients = new ArrayList<>();
@@ -29,5 +30,19 @@ public class GroupTrainer extends Trainer {
 
     public boolean hasAvailableSpots() {
         return clients.size() <= 20;
+    }
+
+    @Override
+    public String toString() {
+        if (trainerID > 0 && !fullName.isEmpty() && age > 0) {
+            ArrayList<String> clientsString = new ArrayList<>();
+            for(Member member: clients) {
+                clientsString.add(member.toString());
+            }
+
+            return String.format("\nGroupTrainer{%d, %s, %s, %s, %s}\n", trainerID, fullName, age, specialization, Arrays.toString(clientsString.toArray(new String[0])));
+        } else {
+            return "Invalid object.";
+        }
     }
 }

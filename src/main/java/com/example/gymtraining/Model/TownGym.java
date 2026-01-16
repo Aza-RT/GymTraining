@@ -2,6 +2,8 @@ package com.example.gymtraining.Model;
 
 import com.example.gymtraining.Exception.InvalidInputException;
 
+import java.util.Arrays;
+
 public class TownGym extends Gym {
 
     private boolean familyDiscount;
@@ -42,6 +44,12 @@ public class TownGym extends Gym {
 
     @Override
     public String toString() {
-        return super.toString() + String.format(" TownGym{familyDiscount=&b, capacity=%d}", familyDiscount, capacity);
+        if (!name.trim().isEmpty() && !address.trim().isEmpty()) {
+            String trainersString = Arrays.toString(trainers.toArray(new Trainer[0]));
+            String membersString = Arrays.toString(members.toArray(new Member[0]));
+            return String.format("\nTownGym{%s, %s, %s, %s, %b, %d}\n", name, address, trainersString, membersString, familyDiscount, capacity);
+        } else {
+            return "Invalid object.";
+        }
     }
 }

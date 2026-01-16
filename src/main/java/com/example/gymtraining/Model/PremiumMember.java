@@ -3,6 +3,7 @@ package com.example.gymtraining.Model;
 import com.example.gymtraining.Exception.InvalidInputException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -47,5 +48,14 @@ public class PremiumMember extends Member {
         LocalDate endOfSubscription = LocalDate.parse("01.01.2027", dateFormat);
         int days = (int)(ChronoUnit.DAYS.between(today, endOfSubscription));
         return String.format("You still have %d days left till the end of your subscription.", days);
+    }
+
+    @Override
+    public String toString() {
+        if (memberID > 0 && !fullName.isEmpty() && age > 0) {
+            return String.format("\nPremiumMember{%d, %s, %s, %s, %d, %s}\n", memberID, fullName, age, subscriptionDate.format(dateFormat), vipLevel, Arrays.toString(availableTrainers.toArray(new String[0])));
+        } else {
+            return "Invalid object.";
+        }
     }
 }

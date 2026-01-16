@@ -31,4 +31,13 @@ public class ChildMember extends Member {
     public void activateChildDiscount() {
         super.getDiscount("FGS4SK1M2D");
     }
+
+    @Override
+    public String toString() {
+        if (memberID > 0 && !fullName.isEmpty() && age > 0) {
+            return String.format("\nChildMember{%d, %s, %s, %s, %s}\n", memberID, fullName, age, subscriptionDate.format(dateFormat), parentName);
+        } else {
+            return "Invalid object.";
+        }
+    }
 }
