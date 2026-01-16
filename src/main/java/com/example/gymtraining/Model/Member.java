@@ -4,9 +4,8 @@ import com.example.gymtraining.Exception.InvalidInputException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
-public class Member {
+public abstract class Member implements Discount {
     protected int memberID;
     protected String fullName;
     protected int age;
@@ -67,51 +66,36 @@ public class Member {
         this.subscriptionDate = LocalDate.parse(subscriptionDate, dateFormat);
     }
 
+    @Override
     public String calculateDiscount(int userPromocodePercent) {
-        if(userPromocodePercent > promocodePercent) {
+        if (userPromocodePercent > promocodePercent) {
             this.pricePerYear *= (1 - userPromocodePercent * 0.01);
             promocodePercent = userPromocodePercent;
-            return String.format("Promocode active. The payment has been decreased by %d%%.", userPromocodePercent);
+            return String.format("Promocode is active. The payment has been decreased by %d%%.", userPromocodePercent);
         } else {
-            return "Promocode with higher discount already active.";
+            return "Promocode with higher discount is already active.";
         }
     }
 
+    @Override
     public String getDiscount(String promocode) {
         String promocode20Percent = "FGS4SK1M2D";
         String promocode30Percent = "Q4TN9CAYP6";
         String promocode50Percent = "FDA5AKD0SD";
 
-        if(promocode.equals(promocode20Percent)) {
+        if (promocode.equals(promocode20Percent)) {
             return calculateDiscount(20);
-        } else if(promocode.equals(promocode30Percent)) {
+        } else if (promocode.equals(promocode30Percent)) {
             return calculateDiscount(30);
-        } else if(promocode.equals(promocode50Percent)) {
+        } else if (promocode.equals(promocode50Percent)) {
             return calculateDiscount(50);
         } else {
             return "Invalid promocode.";
         }
     }
 
-    public String subscriptionDuration() {
-        LocalDate today = LocalDate.now();
-        LocalDate endOfSubscription = subscriptionDate.plusMonths(1);
-
-        if(today.isBefore(endOfSubscription)) {
-            int days = (int)(ChronoUnit.DAYS.between(today, endOfSubscription));
-            return String.format("You still have %d days left till the end of your subscription.", days);
-        } else {
-            return "Your subscription has been deprecated.";
-        }
-    }
-
-    public String hasPromocode() {
-        if(promocodePercent != 0) {
-            return String.format("%s has %d%% discount promocode.", fullName, promocodePercent);
-        } else {
-            return String.format("%s does not have a discount promocode.", fullName);
-        }
-    }
+    public abstract String subscriptionDuration();
+    public abstract String hasPromocode();
 
     public boolean isValid() {
         return memberID != 0 && !fullName.isEmpty() && age > 0;

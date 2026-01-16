@@ -2,12 +2,14 @@ package com.example.gymtraining.Model;
 
 import com.example.gymtraining.Exception.InvalidInputException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CityGym extends Gym {
 
     private int branches;
     private boolean parking;
+    private final ArrayList<String> specializations = new ArrayList<>(Arrays.stream(new String[]{"Weightlifting", "Bodybuilding", "Fitness", "Yoga"}).toList());
 
     public CityGym(String name, String address, int branches, boolean parking) {
         super(name, address, new Trainer[]{}, new Member[]{});
@@ -37,8 +39,15 @@ public class CityGym extends Gym {
 
     @Override
     public void addMember(Member member) {
-        if (member instanceof PremiumMember) {
-            super.addMember(member);
+        if (member.isValid()) {
+            this.members.add(member);
+        }
+    }
+
+    @Override
+    public void employTrainer(Trainer trainer) {
+        if (trainer.isValid() && specializations.contains(trainer.getSpecialization())) {
+            this.trainers.add(trainer);
         }
     }
 

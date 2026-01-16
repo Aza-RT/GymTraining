@@ -2,12 +2,14 @@ package com.example.gymtraining.Model;
 
 import com.example.gymtraining.Exception.InvalidInputException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TownGym extends Gym {
 
     private boolean familyDiscount;
     private int capacity;
+    private final ArrayList<String> specializations = new ArrayList<>(Arrays.stream(new String[]{"Weightlifting", "Bodybuilding"}).toList());
 
     public TownGym(String name, String address, boolean familyDiscount, int capacity) {
         super(name, address, new Trainer[]{}, new Member[]{});
@@ -35,11 +37,18 @@ public class TownGym extends Gym {
         this.familyDiscount = familyDiscount;
     }
 
+    @Override
+    public void addMember(Member member) {
+        if (member.isValid()) {
+            this.members.add(member);
+        }
+    }
 
     @Override
     public void employTrainer(Trainer trainer) {
-        super.employTrainer(trainer);
-        System.out.println("TownGym local trainer employed");
+        if (trainer.isValid() && specializations.contains(trainer.getSpecialization())) {
+            this.trainers.add(trainer);
+        }
     }
 
     @Override

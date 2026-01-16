@@ -2,9 +2,11 @@ package com.example.gymtraining.Model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class GroupTrainer extends Trainer {
     private ArrayList<Member> clients = new ArrayList<>();
+    private final Random random = new Random();
 
     public GroupTrainer(int id, String name, int age, String specialization, Member[] clients) {
         super(id, name, age, specialization);
@@ -25,7 +27,25 @@ public class GroupTrainer extends Trainer {
 
     @Override
     public boolean isProfessional(String field) {
-        return super.isProfessional(field) && clients.size() > 5;
+        return field.equalsIgnoreCase(super.specialization) && clients.size() > 5;
+    }
+
+    @Override
+    public String scheduleOnDay(String day) {
+        String[] hours = {"08", "09", "10", "11", "12", "13", "14", "15",
+                          "16", "17", "18", "19", "20", "21"};
+        String[] minutes = {"00", "15", "30", "45"};
+
+        switch (day) {
+            case "Monday" -> {return String.format("%s has a group session at %s:%s on %s.", fullName, hours[random.nextInt(0, 14)], minutes[random.nextInt(0,4)], day);}
+            case "Tuesday" -> {return String.format("%s has a group session at %s:%s on %s.", fullName, hours[random.nextInt(0, 14)], minutes[random.nextInt(0,4)], day);}
+            case "Wednesday" -> {return String.format("%s is not free on %s.", fullName, day);}
+            case "Thursday" -> {return String.format("%s has a group session at %s:%s on %s.", fullName, hours[random.nextInt(0, 14)], minutes[random.nextInt(0,4)], day);}
+            case "Friday" -> {return String.format("%s is not free on %s.", fullName, day);}
+            case "Saturday" -> {return String.format("%s has a group session at %s:%s on %s.", fullName, hours[random.nextInt(0, 14)], minutes[random.nextInt(0,4)], day);}
+            case "Sunday" -> {return String.format("%s has a group session at %s:%s on %s.", fullName, hours[random.nextInt(0, 14)], minutes[random.nextInt(0,4)], day);}
+            default -> {return "Invalid day.";}
+        }
     }
 
     public boolean hasAvailableSpots() {

@@ -51,11 +51,18 @@ public class PremiumMember extends Member {
     }
 
     @Override
+    public String hasPromocode() {
+        return String.format("%s is a Premium Member.", fullName);
+    }
+
+    @Override
     public String toString() {
         if (memberID > 0 && !fullName.isEmpty() && age > 0) {
             ArrayList<String> trainersString = new ArrayList<>();
             for(Trainer trainer: availableTrainers) {
-                trainersString.add(trainer.toString());
+                if (trainer.isValid()) {
+                    trainersString.add(trainer.toString());
+                }
             }
 
             return String.format("\nPremiumMember{%d, %s, %s, %s, %d, %s}\n", memberID, fullName, age, subscriptionDate.format(dateFormat), vipLevel, Arrays.toString(trainersString.toArray(new String[0])));

@@ -1,4 +1,5 @@
 package com.example.gymtraining.Menu;
+import com.example.gymtraining.Exception.InvalidInputException;
 import com.example.gymtraining.Model.*;
 
 import java.util.ArrayList;
@@ -6,17 +7,23 @@ import java.util.Scanner;
 
 public class GymMenu implements Menu {
     private static final Scanner input = new Scanner(System.in);
+    private final Member member1 = new ChildMember(1, "Aruzhan Sadykqyzy", 14, "01.01.2026", "Sadyk A.");
+    private final Member member2 = new PremiumMember(2, "Dias Nur", 25, "05.01.2026", new Trainer[]{new GroupTrainer(1, "Almas Toleu", 30, "Fitness", new Member[]{})}, 3);
+    private final Member member3 = new ChildMember(3, "Ilyas Amangeldiyev", 17, "12.01.2026", "Ermek A.");
+    private final Trainer trainer1 = new PersonalTrainer(1, "Almas Toleu", 30, "Fitness", member1);
+    private final Trainer trainer2 = new GroupTrainer(2, "Nursultan Bek", 28, "Yoga", new Member[]{member3});
+    private static final String indent = "    ";
 
     @Override
     public void run() {
         ArrayList<Member> members = new ArrayList<>();
         ArrayList<Trainer> trainers = new ArrayList<>();
 
-        members.add(new ChildMember(1, "Aruzhan Sadykqyzy", 14, "01.01.2026", "Sadyk A."));
-        members.add(new PremiumMember(2, "Dias Nur", 25, "05.01.2026", new Trainer[]{new Trainer(1, "Almas Toleu", 30, "Fitness")}, 3));
+        members.add(member1);
+        members.add(member2);
 
-        trainers.add(new PersonalTrainer(1, "Almas Toleu", 30, "Fitness", new ChildMember(1, "Aruzhan Sadykqyzy", 14, "01.01.2026", "Sadyk A.")));
-        trainers.add(new GroupTrainer(2, "Nursultan Bek", 28, "Yoga", new Member[]{new Member(3, "Ilyas Amangeldiyev", 17, "12.01.2026")}));
+        trainers.add(trainer1);
+        trainers.add(trainer2);
 
         int choice;
 
@@ -118,7 +125,7 @@ public class GymMenu implements Menu {
                             readString("Full name: "),
                             readInt("Age: "),
                             readString("Join date: "),
-                            new Trainer[]{readTrainer("Trainer 1: "), readTrainer("Trainer 2: ")},
+                            new Trainer[]{readTrainer("Trainer 1: ", 1), readTrainer("Trainer 2: ", 1)},
                             readInt("VIP level (1-5): ")
                     ));
                 } else {
@@ -150,7 +157,7 @@ public class GymMenu implements Menu {
                             readString("Full name: "),
                             readInt("Age: "),
                             readString("Specialization: "),
-                            readMember("Member: ")
+                            readMember("Member: ", 1)
                     ));
                 } else if (type == 2) {
                     trainers.add(new GroupTrainer(
@@ -158,7 +165,7 @@ public class GymMenu implements Menu {
                             readString("Full name: "),
                             readInt("Age: "),
                             readString("Specialization: "),
-                            new Member[]{readMember("Member 1: "), readMember("Member 2: ")}
+                            new Member[]{readMember("Member 1: ", 1), readMember("Member 2: ", 1)}
                     ));
                 } else {
                     System.out.println("\nInvalid trainer type. Type your choice again.\n");
@@ -188,35 +195,59 @@ public class GymMenu implements Menu {
         return input.nextLine();
     }
 
-    private static Member readMember(String message) {
+    private static Member readMember(String message, int indentLevel) {
         System.out.println(message);
-        System.out.print("    ID: ");
-        int ID = input.nextInt();
-        input.nextLine();
-        System.out.print("    Full name: ");
-        String fullName = input.nextLine();
-        System.out.print("    Age: ");
-        int age = input.nextInt();
-        input.nextLine();
-        System.out.print("    Subscription date: ");
-        String subscriptionDate = input.nextLine();
+        String info = readString(indent.repeat(indentLevel) + "Select a member type (Child/Premium): ");
 
-        return new Member(ID, fullName, age, subscriptionDate);
+        int ID = readInt(indent.repeat(indentLevel) + "ID: ");
+        String fullName = readString(indent.repeat(indentLevel) + "Full name: ");
+        int age = readInt(indent.repeat(indentLevel) + "Age: ");
+        String subscriptionDate = readString(indent.repeat(indentLevel) + "Subscription date: ");
+
+        if (info.equalsIgnoreCase("child")) {
+            String parentName = readString(indent.repeat(indentLevel) + "Parent name: ");
+
+            return new ChildMember(ID, fullName, age, subscriptionDate, parentName);
+        } else if (info.equalsIgnoreCase("premium")) {
+            int vipLevel = readInt(indent.repeat(indentLevel) + "VIP level: ");
+            int count = readInt(indent.repeat(indentLevel) + "How many trainers? ");
+            Trainer[] trainers = new Trainer[count];
+
+            for (int i = 0; i < count; i++) {
+                trainers[i] = readTrainer(String.format("%sTrainer %d: ", indent.repeat(indentLevel - 1), i + 1), indentLevel + 1);
+            }
+
+            return new PremiumMember(ID, fullName, age, subscriptionDate, trainers, vipLevel);
+        } else {
+            throw new InvalidInputException("Wrong member choice.");
+        }
     }
 
-    private static Trainer readTrainer(String message) {
+    private static Trainer readTrainer(String message, int indentLevel) {
         System.out.println(message);
-        System.out.print("    ID: ");
-        int ID = input.nextInt();
-        input.nextLine();
-        System.out.print("    Full name: ");
-        String fullName = input.nextLine();
-        System.out.print("    Age: ");
-        int age = input.nextInt();
-        input.nextLine();
-        System.out.print("    Specialization: ");
-        String specialization = input.nextLine();
+        String info = readString(indent.repeat(indentLevel) + "Select a trainer type (Personal/Group): ");
 
-        return new Trainer(ID, fullName, age, specialization);
+        int ID = readInt(indent.repeat(indentLevel) + "ID: ");
+        String fullName = readString(indent.repeat(indentLevel) + "Full name: ");
+        int age = readInt(indent.repeat(indentLevel) + "Age: ");
+        String specialization = readString(indent.repeat(indentLevel) + "Specialization: ");
+
+        if (info.equalsIgnoreCase("personal")) {
+            Member member = readMember("Member: ", indentLevel + 1);
+
+            return new PersonalTrainer(ID, fullName, age, specialization, member);
+        } else if (info.equalsIgnoreCase("group")) {
+            int count = readInt("How many members? ");
+            Member[] members = new Member[count];
+
+            for (int i = 0; i < count; i++) {
+                members[i] = readMember(String.format("%sMember %d: ", indent.repeat(indentLevel - 1), i + 1), indentLevel + 1);
+            }
+
+            return new GroupTrainer(ID, fullName, age, specialization, members);
+
+        } else {
+            throw new InvalidInputException("Wrong trainer choice.");
+        }
     }
 }

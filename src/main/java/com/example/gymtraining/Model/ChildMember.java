@@ -28,6 +28,15 @@ public class ChildMember extends Member {
         return "Call a parent to get info.";
     }
 
+    @Override
+    public String hasPromocode() {
+        if(promocodePercent != 0) {
+            return String.format("%s has %d%% discount promocode.", fullName, promocodePercent);
+        } else {
+            return String.format("%s does not have a discount promocode.", fullName);
+        }
+    }
+
     public void activateChildDiscount() {
         super.getDiscount("FGS4SK1M2D");
     }

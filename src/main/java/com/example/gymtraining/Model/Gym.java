@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Gym {
+public abstract class Gym {
     protected String name;
     protected String address;
     protected ArrayList<Trainer> trainers = new ArrayList<>();
@@ -82,17 +82,8 @@ public class Gym {
         }
     }
 
-    public void addMember(Member member) {
-        if (member.isValid()) {
-            this.members.add(member);
-        }
-    }
-
-    public void employTrainer(Trainer trainer) {
-        if (trainer.isValid()) {
-            this.trainers.add(trainer);
-        }
-    }
+    public abstract void addMember(Member member);
+    public abstract void employTrainer(Trainer trainer);
 
     @Override
     public String toString() {
