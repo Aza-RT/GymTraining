@@ -16,7 +16,7 @@ public class GymMenu implements Menu {
 
     @Override
     public void run() {
-        ArrayList<Member> members = new ArrayList<>();
+        ArrayList<Member>  members = new ArrayList<>();
         ArrayList<Trainer> trainers = new ArrayList<>();
 
         members.add(member1);
