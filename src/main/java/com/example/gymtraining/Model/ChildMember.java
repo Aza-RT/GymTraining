@@ -5,8 +5,8 @@ import com.example.gymtraining.Exception.InvalidInputException;
 public class ChildMember extends Member {
     private String parentName;
 
-    public ChildMember(int id, String fullName, int age, String joinDate, String parentName) {
-        super(id, fullName, age, joinDate);
+    public ChildMember(int id, String fullName, int age, String subscriptionDate, String parentName) {
+        super(id, fullName, age, subscriptionDate);
         setParentName(parentName);
     }
 

@@ -4,6 +4,7 @@ import com.example.gymtraining.Exception.InvalidInputException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.sql.Date;
 
 public abstract class Member implements Discount {
     protected int memberID;
@@ -33,9 +34,7 @@ public abstract class Member implements Discount {
         return age;
     }
 
-    public String getSubscriptionDate() {
-        return subscriptionDate.format(dateFormat);
-    }
+    public Date getSubscriptionDate() { return Date.valueOf(subscriptionDate); }
 
     public void setID(int memberID) {
         if (memberID > 0) {
@@ -87,7 +86,7 @@ public abstract class Member implements Discount {
             return calculateDiscount(20);
         } else if (promocode.equals(promocode30Percent)) {
             return calculateDiscount(30);
-        } else if (promocode.equals(promocode50Percent)) {
+        } else if   (promocode.equals(promocode50Percent)) {
             return calculateDiscount(50);
         } else {
             return "Invalid promocode.";
